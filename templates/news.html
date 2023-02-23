@@ -1,0 +1,29 @@
+{% extends 'flatpages/default.html' %}
+
+{% load custom_filters %}
+
+{% load custom_tags %}
+
+{% block title %}
+News
+{% endblock title %}
+{% block content %}
+   <h1>Все новости</h1>
+   <h3>{% current_time '%b %d %Y' %}</h3>
+    <h3> {{ next_news|default_if_none:"Что там интересного на сегодня..." }} </h3>
+   <hr>
+   {% if news %}
+        <table>
+           {% for new in news %}
+           <tr>
+               <td>{{ new.name }}</td>
+               <td>{{ new.dateCreation }}</td>
+               <td>{{ new.description|truncatewords:20 }}</td>
+               <td>{{ new.category.name }}</td>
+           </tr>
+           {% endfor %}
+       </table>
+   {% else %}
+       <h2>Новостей на сегодня больше нет, можно выдохнуть...</h2>
+   {% endif %}
+{% endblock content %}
